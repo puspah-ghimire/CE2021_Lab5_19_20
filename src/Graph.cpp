@@ -71,6 +71,67 @@ void Graph::addEdge(int vertex1, int vertex2) {
     numE++;
 }
 
+void Graph::removeVertex(int vertexToRemove) {
+    if (isEmpty()) {
+        std::cout << "The graph is empty." << std::endl;
+        return;
+    }
+    if (vertexToRemove > numV) {
+        std::cout << "Vertex " << vertexToRemove << " doesn't exist in the graph." << std::endl;
+        return;
+    }
+
+    bool** newMatrix = new bool*[numV - 1];
+    int rowOffset = 0;
+    for (int i = 0; i < numV - 1; i++) {
+        if (i == vertexToRemove - 1) {
+            rowOffset = 1;  
+        }
+        newMatrix[i] = new bool[numV - 1];
+        int colOffset = 0;
+        for (int j = 0; j < numV - 1; j++) {
+            if (j == vertexToRemove - 1) {
+                colOffset = 1;
+            }
+            //Skip the row and column of the vertex to be removed
+            newMatrix[i][j] = adjacencyMatrix[i + rowOffset][j + colOffset];
+        }
+    }
+
+    for (int i = 0; i < numV; i++) {
+        delete[] adjacencyMatrix[i];
+    }
+    delete[] adjacencyMatrix;
+
+    adjacencyMatrix = newMatrix;
+    numV--;
+}
+
+
+void Graph::removeEdge(int vertex1, int vertex2) {
+    if (isEmpty()) {
+        std::cout << "The graph is empty." << std::endl;
+        return;
+    }
+    else if (vertex1 > numV || vertex2 > numV) {
+        if (vertex1 > numV) {
+            std::cout << "Vertex " << vertex1 << " doesn't exist in the graph." << std::endl;
+        }
+        if (vertex2 > numV) {
+            std::cout << "Vertex " << vertex2 << " doesn't exist in the graph." << std::endl;
+        }
+        return;
+    }
+    else{
+        adjacencyMatrix[vertex1 - 1][vertex2 - 1] = 0;
+        if (!directed) {
+            adjacencyMatrix[vertex2 - 1][vertex1 - 1] = 0;
+        }
+
+        numE--;
+    }
+}
+
 int Graph::numVertices() {
     return numV;
 }
@@ -157,3 +218,5 @@ void Graph::display() {
         std::cout << std::endl;
     }
 }
+
+
