@@ -246,7 +246,7 @@ int Graph::degree(int vertex)
 
 std::vector<int> Graph::neighbours(int vertex)
 {
-    if (vertex = 0 || vertex > numV)
+    if (vertex == 0 || vertex > numV)
     {
         return std::vector<int>();
     }
