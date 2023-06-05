@@ -1,12 +1,14 @@
 #include "Graph.hpp"
 #include <iostream>
 
-int main() {
+int main()
+{
     // Create a directed graph
     Graph graph(true);
 
     // Add vertices
-    for (int i = 1; i <= 5; i++) {
+    for (int i = 1; i <= 5; i++)
+    {
         graph.addVertex(i);
     }
 
@@ -31,7 +33,8 @@ int main() {
 
     std::cout << "Neighbours of vertex 2: ";
     std::vector<int> neighbors = graph.neighbours(2);
-    for (int neighbor : neighbors) {
+    for (int neighbor : neighbors)
+    {
         std::cout << neighbor << " ";
     }
     std::cout << std::endl;
@@ -41,9 +44,9 @@ int main() {
 
     // Remove a vertex and an edge
     graph.removeVertex(3);
-    std::cout<<"Removed vertex 3"<<std::endl;
+    std::cout << "Removed vertex 3" << std::endl;
     graph.removeEdge(2, 4);
-    std::cout<<"Removed Edge (2, 4)"<<std::endl;
+    std::cout << "Removed Edge (2, 4)" << std::endl;
 
     // Display the updated graph
     std::cout << "Updated graph adjacency matrix:" << std::endl;

@@ -5,11 +5,13 @@
 #include "Graph.hpp"
 
 // Function to generate a random graph using Erdős-Rényi model
-Graph generateRandomGraph(int numVertices, double edgeProbability) {
+Graph generateRandomGraph(int numVertices, double edgeProbability)
+{
     Graph graph(false); // Undirected graph
 
     // Add vertices to the graph
-    for (int i = 1; i <= numVertices; i++) {
+    for (int i = 1; i <= numVertices; i++)
+    {
         graph.addVertex(i);
     }
 
@@ -18,9 +20,12 @@ Graph generateRandomGraph(int numVertices, double edgeProbability) {
     std::mt19937 gen(rd());
     std::uniform_real_distribution<> dis(0.0, 1.0);
 
-    for (int i = 1; i <= numVertices; i++) {
-        for (int j = i + 1; j <= numVertices; j++) {
-            if (dis(gen) <= edgeProbability) {
+    for (int i = 1; i <= numVertices; i++)
+    {
+        for (int j = i + 1; j <= numVertices; j++)
+        {
+            if (dis(gen) <= edgeProbability)
+            {
                 graph.addEdge(i, j);
             }
         }
@@ -29,7 +34,8 @@ Graph generateRandomGraph(int numVertices, double edgeProbability) {
     return graph;
 }
 
-int main() {
+int main()
+{
     int numVertices;
     double edgeProbability;
 
