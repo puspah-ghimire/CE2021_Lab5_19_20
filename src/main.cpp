@@ -29,7 +29,7 @@ int main() {
     std::cout << "Outdegree of vertex 2: " << graph.outdegree(2) << std::endl;
     std::cout << "Degree of vertex 3: " << graph.degree(3) << std::endl;
 
-    std::cout << "Neighbors of vertex 2: ";
+    std::cout << "Neighbours of vertex 2: ";
     std::vector<int> neighbors = graph.neighbours(2);
     for (int neighbor : neighbors) {
         std::cout << neighbor << " ";
