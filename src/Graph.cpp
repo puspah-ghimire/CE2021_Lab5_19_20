@@ -203,7 +203,12 @@ bool Graph::neighbour(int vertex1, int vertex2) {
     }
 
     if (vertex1 > numV || vertex2 > numV) {
-        std::cout << "Invalid vertices!" << std::endl;
+        if (vertex1 > numV) {
+            std::cout << "Vertex " << vertex1 << " doesn't exist in the graph." << std::endl;
+        }
+        if (vertex2 > numV) {
+            std::cout << "Vertex " << vertex2 << " doesn't exist in the graph." << std::endl;
+        }
         return false;
     }
 
