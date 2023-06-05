@@ -3,41 +3,53 @@
 
 Graph::Graph(bool isDirected) : numV(0), numE(0), directed(isDirected), adjacencyMatrix(nullptr) {}
 
-Graph::~Graph() {
-    if (adjacencyMatrix) {
-        for (int i = 0; i < numV; i++) {
+Graph::~Graph()
+{
+    if (adjacencyMatrix)
+    {
+        for (int i = 0; i < numV; i++)
+        {
             delete[] adjacencyMatrix[i];
         }
         delete[] adjacencyMatrix;
     }
 }
 
-bool Graph::isEmpty() {
+bool Graph::isEmpty()
+{
     return (numV == 0);
 }
 
-bool Graph::isDirected() {
+bool Graph::isDirected()
+{
     return directed;
 }
 
-void Graph::addVertex(int newVertex) {
-    if (newVertex <= 0) {
+void Graph::addVertex(int newVertex)
+{
+    if (newVertex <= 0)
+    {
         std::cout << "Invalid vertex!" << std::endl;
     }
     numV++;
 
-    bool** newMatrix = new bool*[numV];
-    for (int i = 0; i < numV; i++) {
+    bool **newMatrix = new bool *[numV];
+    for (int i = 0; i < numV; i++)
+    {
         newMatrix[i] = new bool[numV];
-        for (int j = 0; j < numV; j++) {
+        for (int j = 0; j < numV; j++)
+        {
             // Initialize with zeros
-            newMatrix[i][j] = 0;   
+            newMatrix[i][j] = 0;
         }
     }
 
-    if (adjacencyMatrix) {
-        for (int i = 0; i < numV - 1; i++) {
-            for (int j = 0; j < numV - 1; j++) {
+    if (adjacencyMatrix)
+    {
+        for (int i = 0; i < numV - 1; i++)
+        {
+            for (int j = 0; j < numV - 1; j++)
+            {
                 newMatrix[i][j] = adjacencyMatrix[i][j];
             }
             delete[] adjacencyMatrix[i];
@@ -48,57 +60,72 @@ void Graph::addVertex(int newVertex) {
     adjacencyMatrix = newMatrix;
 }
 
-void Graph::addEdge(int vertex1, int vertex2) {
-    if (isEmpty()) {
+void Graph::addEdge(int vertex1, int vertex2)
+{
+    if (isEmpty())
+    {
         std::cout << "The graph is empty." << std::endl;
         return;
     }
-    else if (vertex1 > numV || vertex2 > numV) {
-        if (vertex1 > numV) {
+    else if (vertex1 > numV || vertex2 > numV)
+    {
+        if (vertex1 > numV)
+        {
             std::cout << "Vertex " << vertex1 << " doesn't exist in the graph." << std::endl;
         }
-        if (vertex2 > numV) {
+        if (vertex2 > numV)
+        {
             std::cout << "Vertex " << vertex2 << " doesn't exist in the graph." << std::endl;
         }
         return;
     }
-    else {
+    else
+    {
         adjacencyMatrix[vertex1 - 1][vertex2 - 1] = 1;
-        if (!directed) {
+        if (!directed)
+        {
             adjacencyMatrix[vertex2 - 1][vertex1 - 1] = 1;
         }
     }
     numE++;
 }
 
-void Graph::removeVertex(int vertexToRemove) {
-    if (isEmpty()) {
+void Graph::removeVertex(int vertexToRemove)
+{
+    if (isEmpty())
+    {
         std::cout << "The graph is empty." << std::endl;
         return;
     }
-    if (vertexToRemove > numV) {
+    if (vertexToRemove > numV)
+    {
         std::cout << "Vertex " << vertexToRemove << " doesn't exist in the graph." << std::endl;
         return;
     }
 
-    bool** newMatrix = new bool*[numV - 1];
+    bool **newMatrix = new bool *[numV - 1];
     int rowOffset = 0;
-    for (int i = 0; i < numV - 1; i++) {
-        if (i == vertexToRemove - 1) {
-            rowOffset = 1;  
+    for (int i = 0; i < numV - 1; i++)
+    {
+        if (i == vertexToRemove - 1)
+        {
+            rowOffset = 1;
         }
         newMatrix[i] = new bool[numV - 1];
         int colOffset = 0;
-        for (int j = 0; j < numV - 1; j++) {
-            if (j == vertexToRemove - 1) {
+        for (int j = 0; j < numV - 1; j++)
+        {
+            if (j == vertexToRemove - 1)
+            {
                 colOffset = 1;
             }
-            //Skip the row and column of the vertex to be removed
+            // Skip the row and column of the vertex to be removed
             newMatrix[i][j] = adjacencyMatrix[i + rowOffset][j + colOffset];
         }
     }
 
-    for (int i = 0; i < numV; i++) {
+    for (int i = 0; i < numV; i++)
+    {
         delete[] adjacencyMatrix[i];
     }
     delete[] adjacencyMatrix;
@@ -107,24 +134,30 @@ void Graph::removeVertex(int vertexToRemove) {
     numV--;
 }
 
-
-void Graph::removeEdge(int vertex1, int vertex2) {
-    if (isEmpty()) {
+void Graph::removeEdge(int vertex1, int vertex2)
+{
+    if (isEmpty())
+    {
         std::cout << "The graph is empty." << std::endl;
         return;
     }
-    else if (vertex1 > numV || vertex2 > numV) {
-        if (vertex1 > numV) {
+    else if (vertex1 > numV || vertex2 > numV)
+    {
+        if (vertex1 > numV)
+        {
             std::cout << "Vertex " << vertex1 << " doesn't exist in the graph." << std::endl;
         }
-        if (vertex2 > numV) {
+        if (vertex2 > numV)
+        {
             std::cout << "Vertex " << vertex2 << " doesn't exist in the graph." << std::endl;
         }
         return;
     }
-    else{
+    else
+    {
         adjacencyMatrix[vertex1 - 1][vertex2 - 1] = 0;
-        if (!directed) {
+        if (!directed)
+        {
             adjacencyMatrix[vertex2 - 1][vertex1 - 1] = 0;
         }
 
@@ -132,28 +165,35 @@ void Graph::removeEdge(int vertex1, int vertex2) {
     }
 }
 
-int Graph::numVertices() {
+int Graph::numVertices()
+{
     return numV;
 }
 
-int Graph::numEdges() {
+int Graph::numEdges()
+{
     return numE;
 }
 
-int Graph::indegree(int vertex) {
-    if (isEmpty()) {
+int Graph::indegree(int vertex)
+{
+    if (isEmpty())
+    {
         std::cout << "The graph is empty." << std::endl;
         return 0;
     }
 
-    if (vertex > numV) {
+    if (vertex > numV)
+    {
         std::cout << "Invalid vertex!" << std::endl;
         return -1;
     }
 
     int count = 0;
-    for (int i = 0; i < numV; i++) {
-        if (adjacencyMatrix[i][vertex - 1]) {
+    for (int i = 0; i < numV; i++)
+    {
+        if (adjacencyMatrix[i][vertex - 1])
+        {
             count++;
         }
     }
@@ -161,20 +201,25 @@ int Graph::indegree(int vertex) {
     return count;
 }
 
-int Graph::outdegree(int vertex) {
-    if (isEmpty()) {
+int Graph::outdegree(int vertex)
+{
+    if (isEmpty())
+    {
         std::cout << "The graph is empty." << std::endl;
         return 0;
     }
 
-    if (vertex > numV) {
+    if (vertex > numV)
+    {
         std::cout << "Invalid vertex!" << std::endl;
         return -1;
     }
 
     int count = 0;
-    for (int j = 0; j < numV; j++) {
-        if (adjacencyMatrix[vertex - 1][j]) {
+    for (int j = 0; j < numV; j++)
+    {
+        if (adjacencyMatrix[vertex - 1][j])
+        {
             count++;
         }
     }
@@ -182,13 +227,16 @@ int Graph::outdegree(int vertex) {
     return count;
 }
 
-int Graph::degree(int vertex) {
-    if (isEmpty()) {
+int Graph::degree(int vertex)
+{
+    if (isEmpty())
+    {
         std::cout << "The graph is empty." << std::endl;
         return 0;
     }
 
-    if (vertex > numV) {
+    if (vertex > numV)
+    {
         std::cout << "Invalid vertex!" << std::endl;
         return -1;
     }
@@ -196,17 +244,41 @@ int Graph::degree(int vertex) {
     return indegree(vertex) + outdegree(vertex);
 }
 
-bool Graph::neighbour(int vertex1, int vertex2) {
-    if (isEmpty()) {
+std::vector<int> Graph::neighbours(int vertex)
+{
+    if (vertex = 0 || vertex > numV)
+    {
+        return std::vector<int>();
+    }
+
+    std::vector<int> neighborList;
+    for (int i = 0; i < numV; i++)
+    {
+        if (adjacencyMatrix[vertex - 1][i])
+        {
+            neighborList.push_back(i + 1);
+        }
+    }
+
+    return neighborList;
+}
+
+bool Graph::neighbour(int vertex1, int vertex2)
+{
+    if (isEmpty())
+    {
         std::cout << "The graph is empty." << std::endl;
         return false;
     }
 
-    if (vertex1 > numV || vertex2 > numV) {
-        if (vertex1 > numV) {
+    if (vertex1 > numV || vertex2 > numV)
+    {
+        if (vertex1 > numV)
+        {
             std::cout << "Vertex " << vertex1 << " doesn't exist in the graph." << std::endl;
         }
-        if (vertex2 > numV) {
+        if (vertex2 > numV)
+        {
             std::cout << "Vertex " << vertex2 << " doesn't exist in the graph." << std::endl;
         }
         return false;
@@ -215,13 +287,14 @@ bool Graph::neighbour(int vertex1, int vertex2) {
     return adjacencyMatrix[vertex1 - 1][vertex2 - 1] || adjacencyMatrix[vertex2 - 1][vertex1 - 1];
 }
 
-void Graph::display() {
-    for (int i = 0; i < numV; i++) {
-        for (int j = 0; j < numV; j++) {
+void Graph::display()
+{
+    for (int i = 0; i < numV; i++)
+    {
+        for (int j = 0; j < numV; j++)
+        {
             std::cout << adjacencyMatrix[i][j] << " ";
         }
         std::cout << std::endl;
     }
 }
-
-

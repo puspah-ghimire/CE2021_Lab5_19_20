@@ -1,9 +1,11 @@
 #ifndef GRAPH_HPP
 #define GRAPH_HPP
+#include <vector>
 
-class Graph {
+class Graph
+{
 private:
-    bool** adjacencyMatrix;
+    bool **adjacencyMatrix;
     int numV;
     int numE;
     bool directed;
@@ -22,6 +24,7 @@ public:
     int indegree(int vertex);
     int outdegree(int vertex);
     int degree(int vertex);
+    std::vector<int> neighbours(int vertex);
     bool neighbour(int vertex1, int vertex2);
     void display();
 };
